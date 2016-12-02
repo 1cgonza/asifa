@@ -1,12 +1,15 @@
-<?php get_header(); ?>
-<main id="main" class="site-main" role="main">
-  <?php while ( have_posts() ) : the_post();
-    get_template_part( 'layouts/content', 'page' );
+<?php get_header();
 
-    if ( comments_open() || get_comments_number() ) {
-      comments_template();
-    }
-  endwhile;
-  ?>
-</main>
-<?php get_footer(); ?>
+  if ( is_front_page() ) {
+    get_template_part( 'layouts/content', 'home' );
+  } else {
+    while ( have_posts() ) : the_post();
+      get_template_part( 'layouts/content', 'page' );
+
+      if ( comments_open() || get_comments_number() ) {
+        comments_template();
+      }
+    endwhile;
+  }
+
+get_footer(); ?>
