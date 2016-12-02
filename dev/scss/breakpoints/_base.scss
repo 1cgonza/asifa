@@ -1,0 +1,64 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/*----------  General  ----------*/
+body {
+  color: $textColor;
+  line-height: 1.66em;
+  font-size: 16px;
+  background-color: white;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+/*----------  Links  ----------*/
+a {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: darken($naranja, 15%);
+  }
+}
+
+/*============================
+=            Menu            =
+============================*/
+#main-nav {
+  font-size: 0.8em;
+
+  ul {
+    list-style: none;
+    text-align: center;
+
+    li {
+      display: inline-block;
+
+      &.current-menu-item {
+        a {
+          color: $naranja;
+        }
+      }
+    }
+  }
+
+  a {
+    transition: color .1s ease-out;
+    font-weight: bold;
+    padding: 0 0.3em;
+
+    color: $textColor;
+
+    &:hover {
+      color: $naranja;
+    }
+
+  }
+}
+
+/*=====  End of Menu  ======*/
+
