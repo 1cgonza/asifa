@@ -30,14 +30,6 @@ function asifa_register_mb() {
     )
   ));
 
-  /*----------  Video  ----------*/
-  $project->add_field(array(
-    'name' => 'URL a video',
-    'desc' => 'El link a YouTube o Vimeo',
-    'id'   => $prefix . 'video_title',
-    'type' => 'oembed',
-  ));
-
   /*=====  End of Información general  ======*/
 
   /*===========================================
@@ -67,6 +59,38 @@ function asifa_register_mb() {
   ));
 
   /*=====  End of Galería de imágenes  ======*/
+
+  /*=============================
+  =            Videos           =
+  =============================*/
+  $videos = new_cmb2_box(array(
+    'id'           => $prefix . 'videos',
+    'title'        => 'Videos',
+    'object_types' => array('proyecto', 'asociado'),
+    'context'      => 'normal',
+    'priority'     => 'high',
+    'show_names'   => true
+  ));
+
+  $videosID = $videos->add_field(array(
+    'id'          => $prefix . 'video',
+    'type'        => 'group',
+    'description' => '',
+    'options'     => array(
+      'group_title'   => __('Video {#}'),
+      'add_button'    => 'Nuevo video',
+      'remove_button' => 'Eliminar video',
+      'sortable'      => true
+    )
+  ));
+
+  $videos->add_group_field($videosID, array(
+    'name' => 'URL a video',
+    'desc' => 'Link a YouTube o Vimeo',
+    'id'   => 'oembed_url',
+    'type' => 'oembed'
+  ));
+  /*=====  End of Videos  ======*/
 
   /*=====================================
   =            Ficha Técnica            =
