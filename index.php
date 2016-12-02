@@ -1,6 +1,5 @@
-<?php get_header(); ?>
-<main id="main" class="site-main" role="main">
-<?php if ( have_posts() ) : ?>
+<?php get_header();
+  if ( have_posts() ) : ?>
 
   <?php if ( is_home() && !is_front_page() ) : ?>
     <header class="archive-header">
@@ -18,7 +17,6 @@
     ) );
   else :
     get_template_part( 'layouts/content', 'none' );
-endif;
-?>
-</main>
+  endif; ?>
+
 <?php get_footer(); ?>
