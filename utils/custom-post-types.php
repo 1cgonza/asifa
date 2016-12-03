@@ -34,8 +34,8 @@ function custom_post_types() {
       'query_var'           => true,
       'menu_position'       => 8,
       'menu_icon'           => 'dashicons-admin-customizer',
-      'rewrite'             => array('slug' => 'proyecto', 'with_front' => false),
-      'has_archive'         => false,
+      'rewrite'             => array('slug' => 'proyectos', 'with_front' => false),
+      'has_archive'         => true,
       'capability_type'     => 'post',
       'hierarchical'        => false,
       'supports'            => array('title', 'thumbnail', 'revisions')
@@ -68,11 +68,45 @@ function custom_post_types() {
       'query_var'           => true,
       'menu_position'       => 8,
       'menu_icon'           => 'dashicons-admin-users',
-      'rewrite'             => array('slug' => 'asociado', 'with_front' => false),
-      'has_archive'         => false,
+      'rewrite'             => array('slug' => 'asociados', 'with_front' => false),
+      'has_archive'         => true,
       'capability_type'     => 'post',
       'hierarchical'        => false,
       'supports'            => array('title', 'thumbnail', 'revisions')
+    )
+  );
+
+  register_post_type( 'portfolio',
+    array(
+      'labels' => array(
+        'name'               => 'Portfolio',
+        'singular_name'      => 'Portfolio',
+        'all_items'          => 'Todos los Portfolio',
+        'add_new'            => 'Agregar Portfolio',
+        'add_new_item'       => 'Agregar Portfolio',
+        'edit'               => 'Editar',
+        'edit_item'          => 'Editar Portfolio',
+        'new_item'           => 'Nuevo Portfolio',
+        'view_item'          => 'Ver Portfolio',
+        'search_items'       => 'Buscar Portfolio',
+        'not_found'          => 'No hay resultados.',
+        'not_found_in_trash' => 'No hay elementos en la papelera.',
+        'parent_item_colon'  => ''
+      ),
+
+      'description'         => '',
+      'public'              => true,
+      'publicly_queryable'  => true,
+      'exclude_from_search' => false,
+      'show_ui'             => true,
+      'query_var'           => true,
+      'menu_position'       => 8,
+      'menu_icon'           => 'dashicons-admin-users',
+      'rewrite'             => array('slug' => 'portfolio', 'with_front' => false),
+      'has_archive'         => true,
+      'capability_type'     => 'post',
+      'hierarchical'        => false,
+      'supports'            => array('title', 'editor', 'thumbnail', 'revisions')
     )
   );
 }
