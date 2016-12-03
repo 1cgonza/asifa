@@ -20,6 +20,8 @@ function asifa_setup() {
   register_nav_menus( array(
     'main' => 'Men&uacute; Principal'
   ) );
+
+  add_image_size('asifa-500x500', 500, 500, array('center', 'center'));
 }
 add_action('after_setup_theme', 'asifa_setup');
 
