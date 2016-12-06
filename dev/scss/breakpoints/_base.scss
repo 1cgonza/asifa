@@ -65,6 +65,39 @@ body {
   background-color: #43474d;
 }
 
+@keyframes preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.preloader {
+  cursor: wait;
+  background-color: transparent;
+  border-radius: 100%;
+  animation: preloader .8s infinite cubic-bezier(0.445,.05,.55,.95);
+  border: 2px solid #000;
+  border-color: #eee #eee #aaa #aaa;
+  width: 45px;
+  height: 45px;
+  display: block;
+  z-index: 9999;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.hidden {
+  opacity: 0;
+}
+
 /*----------  Links  ----------*/
 a {
   text-decoration: none;
@@ -135,22 +168,29 @@ a {
     font-size: 2.5em;
     padding: 0.5em 0;
   }
+}
 
-  /*----------  Galeria  ----------*/
+/*=====  End of Home  ======*/
+
+/*===============================
+=            Galeria            =
+===============================*/
+.asifa-gallery {
+  position: relative;
+
   .gallery-wrapper {
     font-size: 0;
     line-height: 0;
     margin: 0;
     padding: 0;
     text-align: center;
+    transition: opacity .35s ease-out;
   }
 
   .gallery-item {
     font-size: 12px;
     overflow: hidden;
     display: inline-block;
-    width: 200px;
-    height: 200px;
     position: relative;
     line-height: 1.4;
 
@@ -193,6 +233,5 @@ a {
 }
 
 
-/*=====  End of Home  ======*/
-
+/*=====  End of Galeria  ======*/
 
