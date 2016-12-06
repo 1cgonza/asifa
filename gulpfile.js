@@ -1,13 +1,14 @@
 'use strict';
 
 const gulp         = require('gulp');
-const concat       = require('gulp-concat');
-const uglify       = require('gulp-uglify');
 const sourcemaps   = require('gulp-sourcemaps');
 const scss         = require('gulp-sass');
 const rename       = require('gulp-rename');
-const autoprefixer = require('gulp-autoprefixer');
+const postcss      = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
 const browserSync  = require('browser-sync').create();
+const webpack      = require('webpack-stream');
+const config       = require('./webpack.config.js');
 
 var paths = {
   scripts: ['./dev/js/**/*.js'],
@@ -17,21 +18,16 @@ var paths = {
 
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts)
-    .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(concat('scripts.min.js'))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./js'));
+    .pipe(webpack(config))
+    .pipe(gulp.dest('./js'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('styles', function() {
   return gulp.src(paths.styles)
     .pipe(sourcemaps.init())
       .pipe(scss({outputStyle: 'compressed'}).on('error', scss.logError))
-      .pipe(autoprefixer({
-        browsers: ['last 2 versions'],
-        cascade: false
-      }))
+      .pipe(postcss([autoprefixer({browsers: ['last 2 versions']})]))
       .pipe(rename('style.min.css'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./css'));
