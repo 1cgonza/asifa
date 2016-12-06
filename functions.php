@@ -48,6 +48,23 @@ function asifa_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'asifa_scripts' );
 
+function asifa_archive_title( $title ) {
+  if ( is_category() ) {
+      $title = single_cat_title( '', false );
+  } elseif ( is_tag() ) {
+      $title = single_tag_title( '', false );
+  } elseif ( is_author() ) {
+      $title = '<span class="vcard">' . get_the_author() . '</span>';
+  } elseif ( is_post_type_archive() ) {
+      $title = post_type_archive_title( '', false );
+  } elseif ( is_tax() ) {
+      $title = single_term_title( '', false );
+  }
+  return $title;
+}
+add_filter( 'get_the_archive_title', 'asifa_archive_title' );
+
+
 /*===========================================
 =            Quitar basura de WP            =
 ===========================================*/
@@ -77,24 +94,88 @@ function disable_emojis_tinymce($plugins) {
 /*=====================================
 =            WP Customizer            =
 =====================================*/
+/**
+* Una clase para ayudar a crear las diferentes opciones de wp_customize
+*/
+class AsifaCustomizerSetting {
+  function __construct($wp_customize, $options) {
+    if (empty($options) && sizeof($options) < 4) {
+      return false;
+    }
+
+    $this->customize = $wp_customize;
+    $this->section   = $options['section']  ? $options['section']  : NULL;
+    $this->id        = $options['id']       ? $options['id']       : NULL;
+    $this->label     = $options['label']    ? $options['label']    : NULL;
+    $this->type      = $options['type']     ? $options['type']     : NULL;
+
+    $wp_customize->add_setting($this->id);
+    $control = $this->getControl();
+    $wp_customize->add_control($control);
+  }
+
+  private function getControl() {
+    if ( is_null($this->type) || $this->type == 'text') {
+      return $this->getTextControl();
+    }
+  }
+
+  private function getTextControl() {
+    return new WP_Customize_Control($this->customize, $this->id,
+      array(
+        'label'    => $this->label,
+        'section'  => $this->section,
+        'settings' => $this->id,
+        'type'     => 'text'
+      )
+    );
+  }
+
+  private function getMediaControl() {
+    return new WP_Customize_Media_Control($this->customize, $this->id,
+      array(
+        'label'     => $this->label,
+        'section'   => 'media',
+        'mime_type' => 'image',
+        'section'   => $this->section,
+        'settings'  => $this->id
+      )
+    );
+  }
+}
+
 function ka_customize_register($wp_customize) {
   /*----------  Backgrounds Homepage Section  ----------*/
-  $wp_customize->add_setting( 'header_logo' , array(
-    'transport' => 'refresh',
-  ));
-
   $wp_customize->add_section( 'header' , array(
-    'title'     => 'Logo',
+    'title'     => 'Logos',
     'priority'  => 30,
   ));
 
-  $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'image_control_top', array(
-    'label'     => 'Home Page Image - Top',
-    'section'   => 'media',
-    'mime_type' => 'image',
-    'section'   => 'header',
-    'settings'  => 'header_logo',
-  )));
+  $headerLogo = new AsifaCustomizerSetting($wp_customize, array(
+    'section' => 'header',
+    'id'      => 'header_logo',
+    'label'   => 'Logo para cabezote de la p&aacute;gina',
+    'type'    => 'media'
+  ));
+
+  /*----------  Cuentas redes sociales  ----------*/
+  $wp_customize->add_section('social', array(
+    'title'       => 'Redes sociales',
+    'description' => 'Solo el nombre de usuario. E.g: Para https://www.facebook.com/<strong>AsifaCol</strong> usar solo <strong>AsifaCol</strong>',
+    'priority'    => 30
+  ));
+
+  // asifa_supported_social() se puede editar en /utils/helpers.php
+  $supportedSocial = asifa_supported_social();
+
+  foreach ($supportedSocial as $slug) {
+    new AsifaCustomizerSetting($wp_customize, array(
+      'section' => 'social',
+      'id'      => $slug,
+      'label'   => ucfirst($slug),
+      'type'    => 'text'
+    ));
+  }
 }
 add_action('customize_register', 'ka_customize_register');
 
