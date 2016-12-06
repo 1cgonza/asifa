@@ -1,12 +1,13 @@
-<section id="home-main" class="home-section bg-highlight-1">
-  <div id="home-galleries" class="m-all t-all d-3of5 ld-2of3">
+<section id="home-main" class="home-section bg-highlight-1 m-all t-all d-all ld-all">
+  <div id="home-galleries" class="m-all t-3of4 d-3of4 ld-3of4">
     <?php
     // ::::: Proyectos :::::  //
     echo get_home_gallery(array(
       'title'          => 'Proyectos',
       'post_type'      => 'proyecto',
       'posts_per_page' => 12,
-      'more_text'      => 'Ver todos los proyectos'
+      'more_text'      => 'Ver todos los proyectos',
+      'grid'           => 'm-1of3 t-1of4 d-1of6 ld-1of6'
     ));
     // ----- End Proyectos -----  // ?>
 
@@ -18,12 +19,13 @@
       'title'          => 'Asociados',
       'post_type'      => 'asociado',
       'posts_per_page' => 30,
-      'more_text'      => 'Conocer todos los asociados'
+      'more_text'      => 'Conocer todos los asociados',
+      'grid'           => 'm-1of3 t-1of4 d-1of6 ld-1of6'
     ));
     // ----- End Asociados -----  // ?>
   </div>
 
-  <aside id="home-main-sidebar" class="bg-highlight-2 m-all t-all d-2of5 ld-1of3">
+  <aside id="home-main-sidebar" class="bg-highlight-2 m-all t-1of4 d-1of4 ld-1of4">
     <h3>¿Quieres ser parte de Asifa?</h3>
   </aside>
 </section>

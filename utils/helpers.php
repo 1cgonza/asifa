@@ -16,6 +16,13 @@ function asifa_get_credits_list() {
     'Producción ejecutiva'
   );
 }
+
+function asifa_supported_social() {
+  return array(
+    'facebook',
+    'twitter'
+  );
+}
 /**
  *
  * @param array     $options
@@ -23,6 +30,7 @@ function asifa_get_credits_list() {
  * @param String    $options['post_type']       Post type name
  * @param Number    $options['posts_per_page']  Number of posts to show in the gallery
  * @param String    $options['more_text']       Text to use in the show more button
+ * @param String    $options['grid']            Class names for grid
  * USE:
  * echo get_home_gallery(array(
     'title'          => 'Asociados',
@@ -40,8 +48,9 @@ function get_home_gallery($options) {
     global $post;
     $type = $options['post_type'];
     $title = array_key_exists('title', $options) ? $options['title'] : NULL;
-    $more = array_key_exists('more_text', $options) ? $options['more_text'] : 'Ver m&aacute;s';
+    $more = array_key_exists('more_text', $options) ? $options['more_text'] : NULL;
     $number = array_key_exists('posts_per_page', $options) ? $options['posts_per_page'] : get_option( 'posts_per_page' );
+    $grid = array_key_exists('grid', $options) ? $options['grid'] : '';
 
     $HTML = '';
 
@@ -51,31 +60,40 @@ function get_home_gallery($options) {
     ));
 
     if ($loop->have_posts()) :
-      $HTML .= '<h2 class="section-title">' . $title . '</h2>';
-      $HTML .= '<ul class="gallery-wrapper">';
+      $HTML .= '<div class="asifa-gallery">';
+        if ( !is_null($title) ) {
+          $HTML .= '<h2 class="section-title">' . $title . '</h2>';
+        }
 
-      while ( $loop->have_posts() ) : $loop->the_post();
-        $thumbnail = get_the_post_thumbnail($post->ID, 'asifa-500x500');
-        $title = get_the_title();
-        $classes = implode( get_post_class('gallery-item'), ' ' );
+        $HTML .= '<span class="preloader"></span>';
 
-        $HTML .= '<li class="' . $classes . '">';
-          $HTML .= '<a href="' . get_the_permalink() . '" title="' . $title . '">';
-            $HTML .= '<div class="item-header">';
-              $HTML .= '<h3 class="item-title">' . $title . '</h3>';
-              $HTML .= '<div class="item-categories"></div>';
-            $HTML .= '</div>';
+        $HTML .= '<ul class="gallery-wrapper hidden">';
 
-            $HTML .= $thumbnail;
-          $HTML .= '</a>';
-        $HTML .= '</li>';
+        while ( $loop->have_posts() ) : $loop->the_post();
+          $thumbnail = get_the_post_thumbnail($post->ID, 'asifa-500x500');
+          $title = get_the_title();
+          $classes = implode( get_post_class('gallery-item'), ' ' );
 
-      endwhile;
-      $HTML .= '</ul>';
+          $HTML .= '<li class="' . $classes . ' ' . $grid . '">';
+            $HTML .= '<a href="' . get_the_permalink() . '" title="' . $title . '">';
+              $HTML .= '<div class="item-header">';
+                $HTML .= '<h3 class="item-title">' . $title . '</h3>';
+                $HTML .= '<div class="item-categories"></div>';
+              $HTML .= '</div>';
+
+              $HTML .= $thumbnail;
+            $HTML .= '</a>';
+          $HTML .= '</li>';
+
+        endwhile;
+        $HTML .= '</ul>';
+      $HTML .= '</div>';
     endif;
     wp_reset_postdata();
 
-    $HTML .= '<a class="long-btn" href="' . get_post_type_archive_link($type) . '" title="' . $title . '">' . $more . '</a>';
+    if ( !is_null($more) ) {
+      $HTML .= '<a class="long-btn" href="' . get_post_type_archive_link($type) . '" title="' . $title . '">' . $more . '</a>';
+    }
 
     return $HTML;
   }
