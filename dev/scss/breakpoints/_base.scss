@@ -108,11 +108,6 @@ a {
   }
 }
 
-#site-header {
-  width: 90%;
-  margin: 0 auto;
-}
-
 /*============================
 =            Menu            =
 ============================*/
@@ -219,6 +214,14 @@ a {
       text-align: center;
     }
 
+    .item-categories {
+      opacity: .7;
+      line-height: 16px;
+      font-size: 0.8em;
+      letter-spacing: 1px;
+      padding-bottom: 2em;
+    }
+
     &:hover {
       .item-header {
         transform: translate3d(0, -100%, 0);
@@ -232,6 +235,43 @@ a {
   }
 }
 
-
 /*=====  End of Galeria  ======*/
+.content-wrapper {
+  margin: 0 auto;
+  display: block;
+}
+
+.page-title {
+  font-size: 3.5em;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 1em 0;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.3);
+}
+
+.asifa-gallery-filters {
+  list-style: none;
+  padding: 3em 0;
+
+  .asifa-gallery-filter {
+    display: inline-block;
+    padding: 14px 16px;
+    margin-right: 8px;
+    line-height: 13px;
+    font-size: 13px;
+    color: #323232;
+    letter-spacing: 1px;
+    cursor: pointer;
+
+    &.current {
+      background-color: #969696;
+      background-color: rgba(0,0,0,.08);
+      border-radius: 2px;
+      cursor: default;
+    }
+  }
+
+
+}
+
 
