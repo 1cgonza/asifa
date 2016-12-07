@@ -19,6 +19,21 @@ import imagesLoaded from 'imagesloaded';
         }
       });
 
+      var filters = document.querySelectorAll('.asifa-gallery-filter');
+
+      filters.forEach(function(filter) {
+        let value = filter.dataset.filter;
+
+        filter.onclick = function(e) {
+          isotope.arrange({filter: value});
+
+          var current = document.querySelector('.current');
+          current.classList.remove('current');
+          this.classList.add('current');
+          return false;
+        };
+      });
+
       preloader.classList.add('hidden');
       container.classList.remove('hidden');
 

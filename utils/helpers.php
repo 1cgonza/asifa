@@ -1,5 +1,9 @@
 <?php
 
+function asifa_wrapper_class() {
+  return 'content-wrapper m-all t-9of10 d-4of5 ld-3of4';
+}
+
 function asifa_get_credits_list() {
   return array(
     'Dirección',
@@ -23,14 +27,47 @@ function asifa_supported_social() {
     'twitter'
   );
 }
+
+function asifa_get_filters($terms) {
+  if ( !$terms || is_wp_error($terms) ) {
+    return;
+  };
+
+  $filters = array();
+  $classes = array();
+  $names   = array();
+
+  $filters[] = '<li class="asifa-gallery-filter current" data-filter="*">Todos</li>';
+
+  foreach ($terms as $term) {
+    $class = 'filter-' . $term->slug;
+    $name = $term->name;
+
+    $li = '<li class="asifa-gallery-filter" data-filter=".' . $class . '">';
+      $li .= $name;
+    $li .= '</li>';
+
+    $filters[] = $li;
+    $classes[] = $class;
+    $names[]   = $name;
+  }
+
+  return array(
+    'filters' => $filters,
+    'classes' => $classes,
+    'names'   => $names
+  );
+}
 /**
- *
+ * get_home_gallery()
  * @param array     $options
- * @param String    $optoins['title']           Section title
- * @param String    $options['post_type']       Post type name
- * @param Number    $options['posts_per_page']  Number of posts to show in the gallery
- * @param String    $options['more_text']       Text to use in the show more button
- * @param String    $options['grid']            Class names for grid
+ * @param String    $optoins['title']           Section title.
+ * @param String    $options['post_type']       Post type name.
+ * @param Number    $options['posts_per_page']  Number of posts to show in the gallery.
+ * @param String    $options['more_text']       Text to use in the show more button.
+ * @param String    $options['grid']            Class names for grid.
+ * @param String    $options['order']           Either ASC or DESC to define posts order.
+ * @param String    $options['taxonomy']        Taxonomy name for categories or tags to show with item.
  * USE:
  * echo get_home_gallery(array(
     'title'          => 'Asociados',
@@ -51,12 +88,15 @@ function get_home_gallery($options) {
     $more = array_key_exists('more_text', $options) ? $options['more_text'] : NULL;
     $number = array_key_exists('posts_per_page', $options) ? $options['posts_per_page'] : get_option( 'posts_per_page' );
     $grid = array_key_exists('grid', $options) ? $options['grid'] : '';
+    $order = array_key_exists('order', $options) ? $options['order'] : 'DESC';
+    $taxonomy = array_key_exists('taxonomy', $options) ? $options['taxonomy'] : NULL;
 
     $HTML = '';
 
     $loop = new WP_Query(array(
       'post_type'      => $type,
-      'posts_per_page' => $number
+      'posts_per_page' => $number,
+      'order'          => $order
     ));
 
     if ($loop->have_posts()) :
@@ -71,14 +111,28 @@ function get_home_gallery($options) {
 
         while ( $loop->have_posts() ) : $loop->the_post();
           $thumbnail = get_the_post_thumbnail($post->ID, 'asifa-500x500');
+          $classesArray = get_post_class('gallery-item');
           $title = get_the_title();
-          $classes = implode( get_post_class('gallery-item'), ' ' );
+          $cats = '';
+
+          if (!is_null($taxonomy)) {
+            $filters = asifa_get_filters( get_the_terms($post->ID, $taxonomy) );
+            $terms = get_the_terms($post->ID, $taxonomy);
+            $cats = join(', ', $filters['names']);
+            $classesArray = array_merge($classesArray, $filters['classes']);
+          }
+
+          $classes = implode($classesArray, ' ');
 
           $HTML .= '<li class="' . $classes . ' ' . $grid . '">';
             $HTML .= '<a href="' . get_the_permalink() . '" title="' . $title . '">';
               $HTML .= '<div class="item-header">';
                 $HTML .= '<h3 class="item-title">' . $title . '</h3>';
-                $HTML .= '<div class="item-categories"></div>';
+
+                if (!empty($cats)) {
+                  $HTML .= '<div class="item-categories">' . $cats . '</div>';
+                }
+
               $HTML .= '</div>';
 
               $HTML .= $thumbnail;
