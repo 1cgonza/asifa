@@ -6,8 +6,10 @@
       'title'          => 'Proyectos',
       'post_type'      => 'proyecto',
       'posts_per_page' => 12,
+      'order'          => 'ASC',
       'more_text'      => 'Ver todos los proyectos',
-      'grid'           => 'm-1of3 t-1of4 d-1of6 ld-1of6'
+      'grid'           => 'm-1of3 t-1of4 d-1of6 ld-1of6',
+      'taxonomy'       => 'portfolio_category'
     ));
     // ----- End Proyectos -----  // ?>
 
@@ -19,6 +21,7 @@
       'title'          => 'Asociados',
       'post_type'      => 'asociado',
       'posts_per_page' => 30,
+      'order'          => 'ASC',
       'more_text'      => 'Conocer todos los asociados',
       'grid'           => 'm-1of3 t-1of4 d-1of6 ld-1of6'
     ));
