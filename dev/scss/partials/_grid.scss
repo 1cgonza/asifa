@@ -33,6 +33,11 @@
     @include grid-col;
     width: 75%;
   }
+
+  .m-9of10 {
+    @include grid-col;
+    width: 90%;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1029px) {
@@ -89,6 +94,11 @@
   .t-4of5 {
     @include grid-col;
     width: 80%;
+  }
+
+  .t-9of10 {
+    @include grid-col;
+    width: 90%;
   }
 }
 
