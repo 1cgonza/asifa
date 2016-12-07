@@ -8,7 +8,7 @@
 </head>
 <body <?php body_class(); ?>>
 
-  <header id="site-header">
+  <header id="site-header" class="<?php echo asifa_wrapper_class(); ?>">
     <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
       <?php
         $logoImgID = get_theme_mod('header_logo');

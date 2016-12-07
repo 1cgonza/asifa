@@ -1,9 +1,9 @@
 <?php get_header();
   if ( have_posts() ) : ?>
 
-  <section id="archive-main" class="archive-section bg-highlight-1 m-all t-all d-all ld-all">
-    <header class="page-header">
-      <?php the_archive_title( '<h1 class="page-title">', '</h1>' ); ?>
+  <section id="archive-main" class="archive-section m-all t-all d-all ld-all">
+    <header class="page-header bg-highlight-1">
+      <?php the_archive_title( '<h1 class="page-title ' . asifa_wrapper_class() . '">', '</h1>' ); ?>
     </header>
 
     <?php
