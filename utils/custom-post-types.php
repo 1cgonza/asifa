@@ -38,7 +38,8 @@ function custom_post_types() {
       'has_archive'         => true,
       'capability_type'     => 'post',
       'hierarchical'        => false,
-      'supports'            => array('title', 'thumbnail', 'revisions')
+      'supports'            => array('title', 'thumbnail', 'revisions'),
+      // 'taxonomies'          => array('category')
     )
   );
 
@@ -107,6 +108,26 @@ function custom_post_types() {
       'capability_type'     => 'post',
       'hierarchical'        => false,
       'supports'            => array('title', 'editor', 'thumbnail', 'revisions')
+    )
+  );
+
+  register_taxonomy('portfolio_category', 'proyecto',
+    array(
+      'labels' => array(
+        'name'              => 'Categor&iacute;as del proyecto',
+        'singular_name'     => 'Categor&iacute;a',
+        'search_items'      => 'Buscar',
+        'all_items'         => 'Todas',
+        'parent_item'       => 'Categor&iacute;a superior',
+        'parent_item_colon' => 'Categor&iacute;a superior:',
+        'edit_item'         => 'Editar',
+        'update_item'       => 'Actualizar',
+        'add_new_item'      => 'Nueva categor&iacute;a',
+        'new_item_name'     => 'Nuevo nombre de categor&iacute;a',
+        'menu_name'         => 'Categor&iacute;as del proyecto'
+      ),
+      'rewrite' => array( 'slug' => 'categoria-proyecto' ),
+      'hierarchical' => true,
     )
   );
 }
