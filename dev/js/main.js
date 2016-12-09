@@ -6,7 +6,9 @@ import imagesLoaded from 'imagesloaded';
 
   var galleries = document.querySelectorAll('.asifa-gallery');
 
-  galleries.forEach(function(gallery) {
+  for (var i = 0; i < galleries.length; i++) {
+    let gallery = galleries[i];
+
     imagesLoaded(gallery, function() {
       var preloader = gallery.querySelector('.preloader');
       var container = gallery.querySelector('.gallery-wrapper');
@@ -21,7 +23,9 @@ import imagesLoaded from 'imagesloaded';
 
       var filters = document.querySelectorAll('.asifa-gallery-filter');
 
-      filters.forEach(function(filter) {
+      for (var j = 0; j < filters.length; j++) {
+        var filter = filters[j];
+
         let value = filter.dataset.filter;
 
         filter.onclick = function(e) {
@@ -32,11 +36,12 @@ import imagesLoaded from 'imagesloaded';
           this.classList.add('current');
           return false;
         };
-      });
+      }
 
       preloader.classList.add('hidden');
       container.classList.remove('hidden');
 
     });
-  });
+  }
+
 })();
