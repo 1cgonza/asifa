@@ -28,7 +28,10 @@ gulp.task('styles', function() {
     .pipe(sourcemaps.init())
       .pipe(scss({outputStyle: 'compressed'}).on('error', scss.logError))
       .pipe(postcss([autoprefixer({browsers: ['last 2 versions']})]))
-      .pipe(rename('style.min.css'))
+      // .pipe(rename('style.min.css'))
+      .pipe(rename({
+        suffix: '.min'
+      }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./css'));
 });
