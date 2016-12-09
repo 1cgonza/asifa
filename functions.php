@@ -15,7 +15,8 @@ function asifa_setup() {
     'gallery',
     'caption'
   ));
-  add_editor_style(array( 'css/editor-style.css', asifa_google_fonts() ));
+  add_editor_style( array( 'css/editor-style.min.css', asifa_google_fonts() ) );
+  // add_editor_style( array( 'css/editor-style.css', str_replace(',', '%2C', ka_google_fonts())));
 
   register_nav_menus( array(
     'main' => 'Men&uacute; Principal'
@@ -90,6 +91,38 @@ function disable_emojis_tinymce($plugins) {
 }
 
 /*=====  End of Quitar basura de WP  ======*/
+
+/*================================
+=            Sidebars            =
+================================*/
+function asifa_sidebars() {
+  $args = array(
+    'id'    => 'sidebar-home',
+    'class' => 'asifa-sidebar bg-highlight-2 m-all t-1of4 d-1of4 ld-1of4',
+    'name'  => 'Home Sidebar',
+    'description' => 'Muestra la informaci&oacute;n de registro y el feed de Facebook',
+    'before_title'  => '<h2 class="widget-title">',
+    'after_title'   => '</h2>',
+    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    'after_widget'  => '</div>',
+  );
+  register_sidebar( $args );
+
+  $args = array(
+    'id'          => 'sidebar-general',
+    'class'       => 'asifa-sidebar',
+    'name'        => 'Sidebar general',
+    'description' => 'Muestra el feed de Facebook',
+    'before_title'  => '<h2 class="widget-title">',
+    'after_title'   => '</h2>',
+    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    'after_widget'  => '</div>',
+
+  );
+  register_sidebar( $args );
+}
+add_action( 'widgets_init', 'asifa_sidebars' );
+/*=====  End of Sidebars  ======*/
 
 /*=====================================
 =            WP Customizer            =
@@ -179,5 +212,33 @@ function ka_customize_register($wp_customize) {
 }
 add_action('customize_register', 'ka_customize_register');
 
-
 /*=====  End of WP Customizer  ======*/
+
+function asifa_mce_buttons( $buttons ) {
+  array_unshift( $buttons, 'styleselect' );
+  return $buttons;
+}
+add_filter( 'mce_buttons_2', 'asifa_mce_buttons' );
+
+function asifa_mce_formats( $init_array ) {
+  $styleFormats = array(
+    // Each array child is a format with it's own settings
+    array(
+      'title' => 'Título 2 info',
+      'block' => 'h2',
+      'classes' => 'asifa-info-title',
+      'wrapper' => false,
+    ),
+    array(
+      'title' => 'Small',
+      'block' => 'small',
+      'classes' => 'asifa-small-text',
+      'wrapper' => true,
+    ),
+  );
+  $init_array['style_formats'] = json_encode( $styleFormats );
+
+  return $init_array;
+
+}
+add_filter( 'tiny_mce_before_init', 'asifa_mce_formats' );

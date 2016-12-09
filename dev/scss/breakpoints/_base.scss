@@ -20,6 +20,26 @@ body {
     color: #fff;
 }
 
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2.2em;
+}
+
+h3 {
+  font-size: 2em
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
 .long-btn {
   transition: background .15s ease-in-out;
   display: block;
@@ -98,6 +118,23 @@ body {
   opacity: 0;
 }
 
+.asifa-info-title {
+  display: table;
+  line-height: 1.6;
+
+  &::before {
+    content: '';
+    display: table-cell;
+    vertical-align: middle;
+    width: 40px;
+    height: 3em;
+    background-image: url('/wp-content/uploads/2014/09/asifooo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-right: 2em;
+  }
+}
+
 /*----------  Links  ----------*/
 a {
   text-decoration: none;
@@ -167,6 +204,24 @@ a {
 
 /*=====  End of Home  ======*/
 
+/*================================
+=            Sidebars            =
+================================*/
+.asifa-sidebar {
+  padding: 0 2em 2em 2em;
+}
+
+.widget {
+  width: 100%;
+
+  .loader {
+    display: none!important;
+  }
+}
+
+/*=====  End of Sidebars  ======*/
+
+
 /*===============================
 =            Galeria            =
 ===============================*/
@@ -212,6 +267,8 @@ a {
       letter-spacing: 1px;
       padding: 0 1.5em;
       text-align: center;
+      font-size: 1.3em;
+      font-weight: normal;
     }
 
     .item-categories {

@@ -28,7 +28,9 @@
     // ----- End Asociados -----  // ?>
   </div>
 
-  <aside id="home-main-sidebar" class="bg-highlight-2 m-all t-1of4 d-1of4 ld-1of4">
-    <h3>¿Quieres ser parte de Asifa?</h3>
-  </aside>
+  <?php if ( is_active_sidebar( 'sidebar-home' ) ) { ?>
+    <aside id="home-main-sidebar" class="asifa-sidebar bg-highlight-2 m-all t-1of4 d-1of4 ld-1of4">
+      <?php dynamic_sidebar( 'sidebar-home' ); ?>
+    </aside>
+  <?php } ?>
 </section>
