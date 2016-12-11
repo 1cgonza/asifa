@@ -9,7 +9,7 @@
     width: 100%;
   }
 
-  .m-1of2 {
+  .m-1of2, .m-2of4 {
     @include grid-col;
     width: 50%;
   }
@@ -46,7 +46,7 @@
     width: 100%;
   }
 
-  .t-1of2 {
+  .t-1of2, .t-2of4 {
     @include grid-col;
     width: 50%;
   }
@@ -64,11 +64,6 @@
   .t-1of4 {
     @include grid-col;
     width: 25%;
-  }
-
-  .t-2of4 {
-    @include grid-col;
-    width: 50%;
   }
 
   .t-3of4 {
@@ -108,7 +103,7 @@
     width: 100%;
   }
 
-  .d-1of2 {
+  .d-1of2, .d-2of4 {
     @include grid-col;
     width: 50%;
   }
@@ -224,7 +219,7 @@
     width: 100%;
   }
 
-  .ld-1of2 {
+  .ld-1of2, .ld-2of4 {
     @include grid-col;
     width: 50%;
   }

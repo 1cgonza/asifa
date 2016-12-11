@@ -142,6 +142,20 @@ h5 {
   }
 }
 
+.video-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    padding-top: 56.25%;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  }
+}
+
 /*----------  Links  ----------*/
 a {
   text-decoration: none;
@@ -228,6 +242,46 @@ a {
 
 /*=====  End of Sidebars  ======*/
 
+/*==============================
+=            Social            =
+==============================*/
+.asifa-social-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .asifa-social-icon {
+    text-indent: -9999px;
+    background-image: url(../img/social-icons.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    margin-right: 0.2em;
+    transition: opacity .15s ease-out;
+
+    a {
+      display: block;
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .asifa-social-facebook {
+    background-position: 0 0;
+  }
+
+  .asifa-social-twitter {
+    background-position: -32px 0;
+  }
+}
+
+
+/*=====  End of Social  ======*/
+
 
 /*===============================
 =            Galeria            =
@@ -307,9 +361,10 @@ a {
 
 .page-title {
   font-size: 3.5em;
+  line-height: 1;
   text-transform: uppercase;
   font-weight: bold;
-  padding: 1em 0;
+  padding: 0.5em 0;
   text-shadow: 1px 1px 1px rgba(0,0,0,.3);
 }
 
@@ -334,8 +389,56 @@ a {
       cursor: default;
     }
   }
-
-
 }
+
+/*=================================
+=            Asociados            =
+=================================*/
+.single-asociado {
+  .article-content {
+    font-size: 0;
+  }
+
+  .article-content-section {
+    font-size: 16px;
+    padding: 0 2em;
+  }
+
+  #asifa-asociado-perfil {
+    .asifa-social-links, img {
+      max-width: 250px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  #asifa-creditos-wrapper {
+    display: table;
+
+    .asifa-credits-row {
+      display: table-row;
+    }
+
+    .asifa-credits-title, .asifa-credits-value {
+      display: table-cell;
+      padding: 1em 1em 0 0;
+    }
+
+    .asifa-credits-title {
+      // font-weight: bold;
+    }
+
+    .asifa-credits-bio {
+      display: table-row;
+    }
+
+  }
+}
+
+/*=====  End of Asociados  ======*/
+
 
 
