@@ -32,6 +32,63 @@ function asifa_register_mb() {
 
   /*=====  End of Información general  ======*/
 
+  /*=========================================
+  =            Creditos Asociado            =
+  =========================================*/
+  $asociado = new_cmb2_box(array(
+    'id'           => $prefix . 'creditos_asociado',
+    'title'        => 'Información',
+    'object_types' => array('asociado'),
+    'context'      => 'normal',
+    'priority'     => 'high',
+    'show_names'   => true
+  ));
+
+  $asociado->add_field(array(
+    'name' => htmlentities('Profesión', 0, 'UTF-8'),
+    'desc' => '',
+    'id' => $prefix . 'profesion',
+    'type' => 'text'
+  ));
+
+  $asociado->add_field(array(
+    'name' => htmlentities('Correo electrónico', 0, 'UTF-8'),
+    'desc' => '',
+    'id' => $prefix . 'email',
+    'type' => 'text_email'
+  ));
+
+  $asociado->add_field(array(
+    'name' => 'Sitio web',
+    'desc' => '',
+    'id' => $prefix . 'url',
+    'type' => 'text_url'
+  ));
+
+  $social = asifa_supported_social();
+
+  foreach ($social as $name) {
+    $asociado->add_field(array(
+      'name' => $name,
+      'desc' => '',
+      'id' => $prefix . strtolower(remove_accents($name)),
+      'type' => 'text'
+    ));
+  }
+
+  $asociado->add_field(array(
+    'name'    => htmlentities('Biografía', 0, 'UTF-8'),
+    'desc'    => '',
+    'id'      => $prefix . 'bio',
+    'type'    => 'wysiwyg',
+    'options' => array(
+      'textarea_rows' => 10,
+      'teeny'         => true,
+      'media_buttons' => false
+    )
+  ));
+  /*=====  End of Creditos Asociado  ======*/
+
   /*===========================================
   =            Galería de imágenes            =
   ===========================================*/

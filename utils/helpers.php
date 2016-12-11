@@ -23,8 +23,8 @@ function asifa_get_credits_list() {
 
 function asifa_supported_social() {
   return array(
-    'facebook',
-    'twitter'
+    'Facebook',
+    'Twitter'
   );
 }
 

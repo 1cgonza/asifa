@@ -201,11 +201,11 @@ function ka_customize_register($wp_customize) {
   // asifa_supported_social() se puede editar en /utils/helpers.php
   $supportedSocial = asifa_supported_social();
 
-  foreach ($supportedSocial as $slug) {
+  foreach ($supportedSocial as $name) {
     new AsifaCustomizerSetting($wp_customize, array(
       'section' => 'social',
-      'id'      => $slug,
-      'label'   => ucfirst($slug),
+      'id'      => strtolower(remove_accents($name)),
+      'label'   => $name,
       'type'    => 'text'
     ));
   }
