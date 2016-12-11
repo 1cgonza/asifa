@@ -21,11 +21,74 @@ function asifa_get_credits_list() {
   );
 }
 
-function asifa_supported_social() {
-  return array(
-    'Facebook',
-    'Twitter'
-  );
+class AsifaSocial {
+
+  public function __construct() {
+    $this->supported = array(
+      array(
+        'slug' => 'facebook',
+        'name' => 'Facebook',
+        'url'  => 'https://www.facebook.com/',
+      ),
+      array(
+        'slug' => 'twitter',
+        'name' => 'Twitter',
+        'url'  => 'https://twitter.com/',
+      ),
+      array(
+        'slug' => 'instagram',
+        'name' => 'Instagram',
+        'url'  => 'https://www.instagram.com/',
+      ),
+      array(
+        'slug' => 'linkedin',
+        'name' => 'LinkedIn',
+        'url'  => 'https://www.linkedin.com/in/',
+      ),
+      array(
+        'slug' => 'vimeo',
+        'name' => 'Vimeo',
+        'url'  => 'https://vimeo.com/',
+      ),
+      array(
+        'slug' => 'youtube',
+        'name' => 'Youtube',
+        'url'  => 'https://vimeo.com/',
+      ),
+    );
+  }
+
+  public function get_supported_array() {
+    return $this->supported;
+  }
+
+  public function checkURL($id, $url, $slug) {
+    $meta = get_post_meta( $id, '_asifa_' . $slug, true );
+
+    if (!empty($meta) && strpos($url, $meta) === false ) {
+      $meta = $url . $meta;
+    }
+
+    return $meta;
+  }
+
+  public function get_front_links($id) {
+    $res = '<ul class="asifa-social-links">';
+
+    foreach ($this->supported as $media) {
+      $url = $this->checkURL($id, $media['url'], $media['slug']);
+
+      if ( !empty($url) ) {
+        $res .= '<li class="asifa-social-icon asifa-social-' . $media['slug'] . '">';
+          $res .= '<a href="' . $url . '" target="_blank">' . $media['name'] . '</a>';
+        $res .= '</li>';
+      }
+    }
+
+    $res .= '</ul>';
+
+    return $res;
+  }
 }
 
 function asifa_get_filters($terms) {

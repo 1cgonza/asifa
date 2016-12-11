@@ -65,13 +65,13 @@ function asifa_register_mb() {
     'type' => 'text_url'
   ));
 
-  $social = asifa_supported_social();
+  $social = new AsifaSocial();
 
-  foreach ($social as $name) {
+  foreach ($social->supported as $media) {
     $asociado->add_field(array(
-      'name' => $name,
+      'name' => $media['name'],
       'desc' => '',
-      'id' => $prefix . strtolower(remove_accents($name)),
+      'id' => $prefix . $media['slug'],
       'type' => 'text'
     ));
   }
@@ -104,7 +104,7 @@ function asifa_register_mb() {
   $gallery->add_field(array(
     'name'        => 'Im&aacute;genes',
     'description' => '',
-    'id'          => 'imgs',
+    'id'          => $prefix . 'imgs',
     'type'        => 'file_list',
     'options'     => array(
       'add_upload_files_text' => 'Agregar Imágenes',  // default: "Add or Upload Files"
