@@ -59,6 +59,13 @@ class Asifa_Admin_Equipo {
   public function __construct( $slug, $version ) {
     $this->slug = $slug;
     $this->version = $version;
+
+    $this->intructions = array(
+      'Agregar' => 'Arrastra al miembro a la sección donde pertenece y asigna el cargo en el campo de texto.',
+      'Ordenar' => 'Puedes re-ordenarlos arrastrándolos dentro de cada una de las secciones.',
+      'Eliminar' => 'Arrastra a la persona a la sección de <i>Miembros (en la izquierda)</i>.',
+      'Guardar' => 'Para guardar los cambios, hacer clic en el botón <strong>Actualizar</strong>.'
+    );
   }
 
   public function enqueue_styles() {
@@ -175,15 +182,20 @@ class Asifa_Admin_Equipo {
     $groups = $users['groups'];
 
     $HTML = '<h1 class="wp-heading-inline">Equipo Asifa</h1>';
+
+    /*----------  Instructions  ----------*/
     $HTML .= '<div class="asifa-admin-description">';
       $HTML .= '<h2>Instrucciones:</h2>';
-      $HTML .= '<p><strong>Agregar:</strong> Arrastra al miembro a la sección donde pertenece y asigna el cargo en el campo de texto.</p>';
-      $HTML .= '<p><strong>Ordenar:</strong> Puedes re-ordenarlos arrastrándolos dentro de cada una de las secciones.</p>';
-      $HTML .= '<p><strong>Eliminar:</strong> Arrastra a la persona a la sección de <i>Miembros (en la izquierda)</i>.</p>';
-      $HTML .= '<p><strong>Guardar:</strong> Para guardar los cambios, hacer clic en el botón <strong>Actualizar</strong>.</p>';
+
+      foreach ($this->intructions as $title => $text) {
+        $HTML .= '<p><strong>' . $title . ': </strong>' . $text . '</p>';
+      }
     $HTML .= '</div>';
 
+    /*----------  Form  ----------*/
     $HTML .= '<form id="asifa-members-form" method="post">';
+
+      /*----------  Asociados  ----------*/
       $HTML .= '<div id="asifa-asociados-wrapper">';
         $HTML .= '<h2 class="group-title">Miembros</h2>';
         $HTML .= '<ul id="asifa-list-asociados">';
@@ -192,11 +204,14 @@ class Asifa_Admin_Equipo {
       $HTML .= '</div>';
 
       $HTML .= '<div id="asifa-sections-wrapper">';
+
+        /*----------  Junta  ----------*/
         $HTML .= '<h2 class="group-title">Junta Directiva</h2>';
         $HTML .= '<ul id="asifa-list-junta" class="asifa-admin-drop-area" data-group="junta">';
           $HTML .= $this->get_group_section($members, 'junta');
         $HTML .= '</ul>';
 
+        /*----------  Equipo  ----------*/
         $HTML .= '<h2 class="group-title">Nuestro Equipo</h2>';
         $HTML .= '<ul id="asifa-list-equipo" class="asifa-admin-drop-area" data-group="equipo">';
           $HTML .= $this->get_group_section($members, 'equipo');
