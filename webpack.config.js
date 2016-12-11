@@ -3,9 +3,12 @@ const Uglify = require('webpack').optimize.UglifyJsPlugin;
 module.exports = {
   context: __dirname + '/dev/js',
   devtool: 'source-map',
-  entry: './main.js',
+  entry: {
+    'scripts': './main.js',
+    'admin': './admin.js'
+  },
   output: {
-    filename: 'scripts.min.js',
+    filename: '[name].min.js',
     path: __dirname + '/js'
   },
   module: {

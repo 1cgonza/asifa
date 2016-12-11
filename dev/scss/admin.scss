@@ -1,0 +1,88 @@
+@import 'partials/normalize';
+@import 'partials/variables';
+
+body.toplevel_page_asifa-users {
+  background-color: white;
+}
+
+.asifa-admin-drop-area {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+}
+
+.asifa-member-draggable {
+  transition: all .25s ease-in-out;
+  cursor: move;
+  display: inline-block;
+
+  &:hover {
+    background-color: $naranja;
+  }
+}
+
+.asifa-member-img {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+}
+
+#asifa-sections-wrapper {
+  width: 65%;
+  float: right;
+}
+
+#asifa-list-junta {
+  background-color: $grayLight;
+}
+
+#asifa-list-equipo {
+  background-color: $grayMid;
+}
+
+#asifa-list-junta, #asifa-list-equipo {
+  .asifa-member-draggable {
+    text-align: center;
+    padding: 1em;
+  }
+
+  .asifa-member-img {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+#asifa-asociados-wrapper {
+  width: 30%;
+  float: left;
+}
+
+#asifa-list-asociados {
+  input {
+    display: none;
+  }
+
+  .asifa-member-draggable {
+    margin: 0.2em;
+    border: 1px solid $naranja;
+    padding: 0 0.4em;
+  }
+
+  .asifa-member-img {
+    margin-right: 0.5em;
+  }
+
+  .asifa-member-name {
+    display: inline-block;
+    font-size: 0.75em;
+  }
+}

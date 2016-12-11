@@ -2,6 +2,7 @@
 
 include 'utils/custom-post-types.php';
 include 'utils/meta-boxes.php';
+include 'utils/equipo.php';
 
 function asifa_setup() {
   add_theme_support('title-tag');
@@ -16,7 +17,6 @@ function asifa_setup() {
     'caption'
   ));
   add_editor_style( array( 'css/editor-style.min.css', asifa_google_fonts() ) );
-  // add_editor_style( array( 'css/editor-style.css', str_replace(',', '%2C', ka_google_fonts())));
 
   register_nav_menus( array(
     'main' => 'Men&uacute; Principal'
