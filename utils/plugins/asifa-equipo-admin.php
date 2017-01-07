@@ -116,12 +116,21 @@ class Asifa_Admin_Equipo {
       $role = get_post_meta($id, '_asifa_member_role', true);
       $order = get_post_meta($id, '_asifa_member_order', true);
 
+      $img = '';
+
+      if ( has_post_thumbnail($id) ) {
+        $img = get_the_post_thumbnail($id);
+      } else {
+        $imgID = get_theme_mod('member_fallback');
+        $img = wp_get_attachment_image($imgID, 'full');
+      }
+
       return array(
         'id' => $id,
         'name' => get_the_title($id),
         'role' => $role,
         'order' => $order,
-        'img' => get_the_post_thumbnail($id)
+        'img' => $img
       );
     }
 
