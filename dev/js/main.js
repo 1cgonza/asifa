@@ -1,10 +1,13 @@
 import Isotope from 'isotope-layout';
 import imagesLoaded from 'imagesloaded';
+import {imgGallery} from './utils/gallery';
 
 (function() {
   'use strict';
 
   var galleries = document.querySelectorAll('.asifa-gallery');
+
+  imgGallery('.asifa-gallery-ui');
 
   for (var i = 0; i < galleries.length; i++) {
     let gallery = galleries[i];
