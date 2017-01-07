@@ -1,6 +1,7 @@
 const Uglify = require('webpack').optimize.UglifyJsPlugin;
 
 module.exports = {
+  debug: true,
   context: __dirname + '/dev/js',
   devtool: 'source-map',
   entry: {
@@ -15,8 +16,15 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
-        loader: 'babel-loader'
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       }
     ],
   },
