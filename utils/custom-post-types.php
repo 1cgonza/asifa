@@ -38,7 +38,7 @@ function custom_post_types() {
       'has_archive'         => true,
       'capability_type'     => 'post',
       'hierarchical'        => false,
-      'supports'            => array('title', 'thumbnail', 'revisions'),
+      'supports'            => array('title', 'editor', 'thumbnail', 'revisions'),
       // 'taxonomies'          => array('category')
     )
   );
@@ -73,7 +73,7 @@ function custom_post_types() {
       'has_archive'         => true,
       'capability_type'     => 'post',
       'hierarchical'        => false,
-      'supports'            => array('title', 'thumbnail', 'revisions')
+      'supports'            => array('title', 'editor', 'thumbnail', 'revisions')
     )
   );
 
