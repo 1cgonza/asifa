@@ -27,6 +27,10 @@ body {
     color: #fff;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+}
+
 h1 {
   font-size: 2.5em;
 }
@@ -45,6 +49,14 @@ h4 {
 
 h5 {
   font-size: 1.2em;
+}
+
+figure {
+  margin: 0;
+}
+
+.aside-title {
+  padding: 0 16px;
 }
 
 .long-btn {
@@ -143,16 +155,16 @@ h5 {
 }
 
 .video-wrapper {
-    position: relative;
-    margin-bottom: 20px;
-    padding-top: 56.25%;
+  position: relative;
+  margin-bottom: 20px;
+  padding-top: 56.25%;
 
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -255,8 +267,8 @@ a {
     background-image: url(../img/social-icons.png);
     background-repeat: no-repeat;
     background-size: cover;
-    width: 32px;
-    height: 32px;
+    width: $socialIconSize;
+    height: $socialIconSize;
     display: inline-block;
     margin-right: 0.2em;
     transition: opacity .15s ease-out;
@@ -275,7 +287,35 @@ a {
   }
 
   .asifa-social-twitter {
-    background-position: -32px 0;
+    background-position: -($socialIconSize) 0;
+  }
+
+  .asifa-social-instagram {
+    background-position: -($socialIconSize * 2) 0;
+  }
+
+  .asifa-social-linkedin {
+    background-position: -($socialIconSize * 3) 0;
+  }
+
+  .asifa-social-youtube {
+    background-position: -($socialIconSize * 4) 0;
+  }
+
+  .asifa-social-vimeo {
+    background-position: -($socialIconSize * 5) 0;
+  }
+
+  .asifa-social-google-plus {
+    background-position: -($socialIconSize * 6) 0;
+  }
+
+  .asifa-social-flickr {
+    background-position: -($socialIconSize * 7) 0;
+  }
+
+  .asifa-social-soundcloud {
+    background-position: -($socialIconSize * 8) 0;
   }
 }
 
@@ -286,6 +326,16 @@ a {
 /*===============================
 =            Galeria            =
 ===============================*/
+// Galerias en paginas individuales
+.asifa-gallery-ui {
+  .gallery-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0.5em;
+  }
+}
+
+// Galerias en archivos (Inicio, Asociados, Proyectos...)
 .asifa-gallery {
   position: relative;
 
@@ -391,22 +441,66 @@ a {
   }
 }
 
+#asifa-creditos-wrapper {
+  padding: 0 1em;
+  display: inline-table;
+
+  .asifa-credits-row {
+    padding: 0.5em;
+    display: table-row;
+
+    &:nth-child(odd) {
+      background-color: lighten($grayMid, 15%);
+    }
+
+    &:nth-child(even) {
+      background-color: lighten($grayMid, 17%);
+    }
+  }
+
+  .asifa-credits-title, .asifa-credits-value {
+    display: table-cell;
+    padding: 1em;
+  }
+
+  .asifa-credits-title {
+    font-weight: bold;
+    color: darken($naranja, 15%);
+  }
+
+  .asifa-credits-bio {
+    // display: table-row;
+  }
+}
+
+article {
+  font-size: 0;
+
+  .article-content-wrapper {
+    font-size: 16px;
+    padding: 0 2em;
+
+    &.page-header {
+      padding: 0;
+    }
+  }
+
+  .article-aside-content {
+    padding: 0 2em;
+  }
+
+  .article-main-content {
+    padding: 2em;
+  }
+}
+
 /*=================================
 =            Asociados            =
 =================================*/
 .single-asociado {
-  .article-content {
-    font-size: 0;
-  }
-
-  .article-content-section {
-    font-size: 16px;
-    padding: 0 2em;
-  }
-
   #asifa-asociado-perfil {
-    .asifa-social-links, img {
-      max-width: 250px;
+    div {
+      font-size: 16px;
     }
 
     img {
@@ -415,30 +509,11 @@ a {
     }
   }
 
-  #asifa-creditos-wrapper {
-    display: table;
-
-    .asifa-credits-row {
-      display: table-row;
-    }
-
-    .asifa-credits-title, .asifa-credits-value {
-      display: table-cell;
-      padding: 1em 1em 0 0;
-    }
-
-    .asifa-credits-title {
-      // font-weight: bold;
-    }
-
-    .asifa-credits-bio {
-      display: table-row;
-    }
-
+  .asifa-profile-portrait {
+    max-width: 200px;
+    display: block;
+    margin: 0 auto;
   }
 }
 
 /*=====  End of Asociados  ======*/
-
-
-

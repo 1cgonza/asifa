@@ -22,7 +22,6 @@ function asifa_get_credits_list() {
 }
 
 class AsifaSocial {
-
   public function __construct() {
     $this->supported = array(
       array(
@@ -55,6 +54,21 @@ class AsifaSocial {
         'name' => 'Youtube',
         'url'  => 'https://vimeo.com/',
       ),
+      array(
+        'slug' => 'google-plus',
+        'name' => 'Google+',
+        'url'  => 'https://plus.google.com/+',
+      ),
+      array(
+        'slug' => 'flickr',
+        'name' => 'Flickr',
+        'url'  => 'https://www.flickr.com/',
+      ),
+      array(
+        'slug' => 'soundcloud',
+        'name' => 'Soundcloud',
+        'url'  => 'https://soundcloud.com/',
+      ),
     );
   }
 
@@ -70,6 +84,18 @@ class AsifaSocial {
     }
 
     return $meta;
+  }
+
+  public function has_links($id) {
+    foreach ($this->supported as $media) {
+      $check = $this->checkURL($id, $media['url'], $media['slug']);
+
+      if ($check) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public function get_front_links($id) {
@@ -140,77 +166,108 @@ function asifa_get_filters($terms) {
   ));
  */
 function get_home_gallery($options) {
-    // Abortar si no esta definido el post_type
-    if (!array_key_exists('post_type', $options)) {
-      return;
-    }
+  // Abortar si no esta definido el post_type
+  if (!array_key_exists('post_type', $options)) {
+    return;
+  }
 
-    global $post;
-    $type = $options['post_type'];
-    $title = array_key_exists('title', $options) ? $options['title'] : NULL;
-    $more = array_key_exists('more_text', $options) ? $options['more_text'] : NULL;
-    $number = array_key_exists('posts_per_page', $options) ? $options['posts_per_page'] : get_option( 'posts_per_page' );
-    $grid = array_key_exists('grid', $options) ? $options['grid'] : '';
-    $order = array_key_exists('order', $options) ? $options['order'] : 'DESC';
-    $taxonomy = array_key_exists('taxonomy', $options) ? $options['taxonomy'] : NULL;
+  global $post;
+  $type = $options['post_type'];
+  $title = array_key_exists('title', $options) ? $options['title'] : NULL;
+  $more = array_key_exists('more_text', $options) ? $options['more_text'] : NULL;
+  $number = array_key_exists('posts_per_page', $options) ? $options['posts_per_page'] : get_option( 'posts_per_page' );
+  $grid = array_key_exists('grid', $options) ? $options['grid'] : '';
+  $order = array_key_exists('order', $options) ? $options['order'] : 'DESC';
+  $taxonomy = array_key_exists('taxonomy', $options) ? $options['taxonomy'] : NULL;
 
-    $HTML = '';
+  $HTML = '';
 
-    $loop = new WP_Query(array(
-      'post_type'      => $type,
-      'posts_per_page' => $number,
-      'order'          => $order
-    ));
+  $loop = new WP_Query(array(
+    'post_type'      => $type,
+    'posts_per_page' => $number,
+    'order'          => $order
+  ));
 
-    if ($loop->have_posts()) :
-      $HTML .= '<div class="asifa-gallery">';
-        if ( !is_null($title) ) {
-          $HTML .= '<h2 class="section-title">' . $title . '</h2>';
+  if ($loop->have_posts()) :
+    $HTML .= '<div class="asifa-gallery">';
+      if ( !is_null($title) ) {
+        $HTML .= '<h2 class="section-title">' . $title . '</h2>';
+      }
+
+      $HTML .= '<span class="preloader"></span>';
+
+      $HTML .= '<ul class="gallery-wrapper hidden">';
+
+      while ( $loop->have_posts() ) : $loop->the_post();
+        $classesArray = get_post_class('gallery-item');
+        $title = get_the_title();
+        $cats = '';
+
+        $thumbnail = '';
+
+        if ( has_post_thumbnail($post->ID) ) {
+          $thumbnail = get_the_post_thumbnail($post->ID, 'asifa-500x500');
+        } else {
+          if ($type == 'asociado') {
+            $thumbID = get_theme_mod('member_fallback');
+          } elseif ($type == 'proyecto') {
+            $thumbID = get_theme_mod('proyecto_fallback');
+          }
+          $thumbnail = wp_get_attachment_image($thumbID, 'full');
         }
 
-        $HTML .= '<span class="preloader"></span>';
+        if (!is_null($taxonomy)) {
+          $filters = asifa_get_filters( get_the_terms($post->ID, $taxonomy) );
+          $terms = get_the_terms($post->ID, $taxonomy);
+          $cats = join(', ', $filters['names']);
+          $classesArray = array_merge($classesArray, $filters['classes']);
+        }
 
-        $HTML .= '<ul class="gallery-wrapper hidden">';
+        $classes = implode($classesArray, ' ');
 
-        while ( $loop->have_posts() ) : $loop->the_post();
-          $thumbnail = get_the_post_thumbnail($post->ID, 'asifa-500x500');
-          $classesArray = get_post_class('gallery-item');
-          $title = get_the_title();
-          $cats = '';
+        $HTML .= '<li class="' . $classes . ' ' . $grid . '">';
+          $HTML .= '<a href="' . get_the_permalink() . '" title="' . $title . '">';
+            $HTML .= '<div class="item-header">';
+              $HTML .= '<h3 class="item-title">' . $title . '</h3>';
 
-          if (!is_null($taxonomy)) {
-            $filters = asifa_get_filters( get_the_terms($post->ID, $taxonomy) );
-            $terms = get_the_terms($post->ID, $taxonomy);
-            $cats = join(', ', $filters['names']);
-            $classesArray = array_merge($classesArray, $filters['classes']);
-          }
+              if (!empty($cats)) {
+                $HTML .= '<div class="item-categories">' . $cats . '</div>';
+              }
 
-          $classes = implode($classesArray, ' ');
+            $HTML .= '</div>';
 
-          $HTML .= '<li class="' . $classes . ' ' . $grid . '">';
-            $HTML .= '<a href="' . get_the_permalink() . '" title="' . $title . '">';
-              $HTML .= '<div class="item-header">';
-                $HTML .= '<h3 class="item-title">' . $title . '</h3>';
+            $HTML .= $thumbnail;
+          $HTML .= '</a>';
+        $HTML .= '</li>';
 
-                if (!empty($cats)) {
-                  $HTML .= '<div class="item-categories">' . $cats . '</div>';
-                }
+      endwhile;
+      $HTML .= '</ul>';
+    $HTML .= '</div>';
+  endif;
+  wp_reset_postdata();
 
-              $HTML .= '</div>';
-
-              $HTML .= $thumbnail;
-            $HTML .= '</a>';
-          $HTML .= '</li>';
-
-        endwhile;
-        $HTML .= '</ul>';
-      $HTML .= '</div>';
-    endif;
-    wp_reset_postdata();
-
-    if ( !is_null($more) ) {
-      $HTML .= '<a class="long-btn" href="' . get_post_type_archive_link($type) . '" title="' . $title . '">' . $more . '</a>';
-    }
-
-    return $HTML;
+  if ( !is_null($more) ) {
+    $HTML .= '<a class="long-btn" href="' . get_post_type_archive_link($type) . '" title="' . $title . '">' . $more . '</a>';
   }
+
+  return $HTML;
+}
+
+function asifa_build_gallery($imgs) {
+  $HTML = '<div class="asifa-gallery-ui" itemscope itemtype="http://schema.org/ImageGallery">';
+
+  foreach ($imgs as $id => $url) :
+    $small = wp_get_attachment_image_src($id, 'asifa-150xauto');
+    $large  = wp_get_attachment_image_src($id, 'asifa-2000xauto');
+
+    $HTML .= '<figure class="gallery-item" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">';
+      $HTML .= '<a href="' . $large[0] . '" itemprop="contentUrl" data-size="' . $large[1] . 'x' . $large[2] . '">';
+        $HTML .= '<img src="' . $small[0] . '" itemprop="thumbnail" />';
+      $HTML .= '</a>';
+    $HTML .= '</figure>';
+  endforeach;
+
+  $HTML .= '</div>';
+
+  return $HTML;
+}
