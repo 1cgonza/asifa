@@ -23,6 +23,8 @@ function asifa_setup() {
   ) );
 
   add_image_size('asifa-500x500', 500, 500, array('center', 'center'));
+  add_image_size('asifa-150xauto', 150, 9999);
+  add_image_size('asifa-2000xauto', 2000, 9999);
 }
 add_action('after_setup_theme', 'asifa_setup');
 
@@ -150,6 +152,8 @@ class AsifaCustomizerSetting {
   private function getControl() {
     if ( is_null($this->type) || $this->type == 'text') {
       return $this->getTextControl();
+    } elseif ($this->type == 'media') {
+      return $this->getMediaControl();
     }
   }
 
@@ -178,16 +182,26 @@ class AsifaCustomizerSetting {
 }
 
 function ka_customize_register($wp_customize) {
-  /*----------  Backgrounds Homepage Section  ----------*/
-  $wp_customize->add_section( 'header' , array(
-    'title'     => 'Logos',
-    'priority'  => 30,
-  ));
-
-  $headerLogo = new AsifaCustomizerSetting($wp_customize, array(
-    'section' => 'header',
+  /*----------  Site assets  ----------*/
+  new AsifaCustomizerSetting($wp_customize, array(
+    'section' => 'title_tagline',
     'id'      => 'header_logo',
     'label'   => 'Logo para cabezote de la p&aacute;gina',
+    'type'    => 'media'
+  ));
+
+  new AsifaCustomizerSetting($wp_customize, array(
+    'section' => 'title_tagline',
+    'id'      => 'member_fallback',
+    'label'   => 'Imagen alternativa en caso de que no exista para asociado.',
+    'type'    => 'media'
+  ));
+
+  //proyecto_fallback
+  new AsifaCustomizerSetting($wp_customize, array(
+    'section' => 'title_tagline',
+    'id'      => 'proyecto_fallback',
+    'label'   => 'Imagen alternativa en caso de que no exista para proyecto.',
     'type'    => 'media'
   ));
 
