@@ -1,6 +1,6 @@
 import Isotope from 'isotope-layout';
 import imagesLoaded from 'imagesloaded';
-import {imgGallery} from './utils/gallery';
+import imgGallery from './utils/gallery';
 
 (function() {
   'use strict';
@@ -43,7 +43,6 @@ import {imgGallery} from './utils/gallery';
 
       preloader.classList.add('hidden');
       container.classList.remove('hidden');
-
     });
   }
 

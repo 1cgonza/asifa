@@ -1,7 +1,7 @@
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUI from 'photoswipe/dist/photoswipe-ui-default';
 
-export var imgGallery = function(gallerySelector) {
+export default function(gallerySelector) {
 
   // parse slide data (url, title, size ...) from DOM elements
   // (children of gallerySelector)
