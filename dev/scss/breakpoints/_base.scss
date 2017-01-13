@@ -27,8 +27,13 @@ body {
     color: #fff;
 }
 
+b, strong {
+  color: #ad7600;
+}
+
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
+  color: black;
 }
 
 h1 {
@@ -55,6 +60,18 @@ figure {
   margin: 0;
 }
 
+/*==================================
+=            WP classes            =
+==================================*/
+.aligncenter {
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+/*=====  End of WP classes  ======*/
+
+
 .aside-title {
   padding: 0 16px;
 }
@@ -70,7 +87,19 @@ figure {
   font-weight: bold;
 }
 
-.bg-highlight-1, .bg-highlight-2, .bg-highlight-3, .bg-highlight-4 {
+.bg-highlight-2, .bg-highlight-3, .bg-highlight-4 {
+  h1, h2, h3, h4, h5 {
+    color: #393836;
+    font-size: 24px;
+    text-align:center;
+    font-weight:bold;
+    padding: 60px 0;
+    margin: 0;
+    letter-spacing:1px;
+  }
+}
+
+.bg-highlight-1, .bg-highlight-3 {
   h1, h2, h3, h4, h5 {
     color: white;
   }
@@ -96,6 +125,10 @@ figure {
   }
 }
 
+.bg-highlight-4 {
+  background-color: #F1F3F6;
+}
+
 .bg-highlight-2 {
   background-color: #cecece;
 }
@@ -112,6 +145,11 @@ figure {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.article-footer {
+  text-align: center;
+  padding: 1em 0 3em;
 }
 
 .preloader {
@@ -328,10 +366,14 @@ a {
 ===============================*/
 // Galerias en paginas individuales
 .asifa-gallery-ui {
+  font-size: 0;
+
   .gallery-item {
+    font-size: 14px;
     display: inline-block;
     vertical-align: middle;
-    margin: 0.5em;
+    padding: 0.5em;
+    text-align: center;
   }
 }
 
@@ -376,10 +418,11 @@ a {
     .item-title {
       text-transform: uppercase;
       letter-spacing: 1px;
-      padding: 0 1.5em;
+      padding: 1em 0.6em;
       text-align: center;
-      font-size: 1.3em;
+      font-size: 14px;
       font-weight: normal;
+      color: white;
     }
 
     .item-categories {
@@ -407,11 +450,16 @@ a {
 .content-wrapper {
   margin: 0 auto;
   display: block;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 .page-title {
   font-size: 3.5em;
-  line-height: 1;
+  line-height: 1.2;
   text-transform: uppercase;
   font-weight: bold;
   padding: 0.5em 0;
@@ -475,6 +523,11 @@ a {
 
 article {
   font-size: 0;
+  margin-bottom: 150px;
+
+  header, section, footer {
+    font-size: 16px;
+  }
 
   .article-content-wrapper {
     font-size: 16px;
@@ -493,6 +546,21 @@ article {
     padding: 2em;
   }
 }
+
+/*============================
+=            Page            =
+============================*/
+.page-header-img {
+  display: block;
+  width: 100%;
+  height: 500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*=====  End of Page  ======*/
+
 
 /*=================================
 =            Asociados            =
@@ -517,3 +585,40 @@ article {
 }
 
 /*=====  End of Asociados  ======*/
+
+/*=====================================
+=            Quienes Somos            =
+=====================================*/
+.asifa-equipo-item {
+  // display: inline-block;
+  // width: 300px;
+  margin-bottom: 3em;
+  padding: 2em;
+  // vertical-align: top;
+
+  .asifa-equipo-img {
+    img {
+      width: 70%;
+      height: auto;
+      border-radius: 50%;
+    }
+  }
+
+  .asifa-equipo-name {
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: #393836;
+  }
+
+  .asifa-equipo-role {
+    color: #777;
+    letter-spacing: 1px;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}
+
+
+/*=====  End of Quienes Somos  ======*/
