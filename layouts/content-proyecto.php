@@ -27,16 +27,16 @@
     }
   }
 
-  $profileClass = !$credits ? asifa_wrapper_class() : 'article-main-content m-all t-all d-3of5 ld-3of5';
+  $profileClass = !$credits ? asifa_wrapper_class() : 'article-content-wrapper article-main-content m-all t-all d-3of5 ld-3of5';
 ?>
 <article <?php post_class('m-all t-all d-all ld-all'); ?>>
   <header class="article-content-wrapper page-header bg-highlight-1">
     <?php the_title('<h1 class="page-title ' . asifa_wrapper_class() . '">', '</h1>'); ?>
   </header>
 
-  <section id="asifa-proyecto-main" class="article-content-wrapper <?php echo $profileClass; ?>">
+  <section id="asifa-proyecto-main" class="<?php echo $profileClass; ?>">
     <?php if (!empty($sinopsis)) : ?>
-      <?php echo wpautop( $sinopsis); ?>
+      <?php echo apply_filters('the_content', $sinopsis); ?>
     <?php endif ?>
 
     <?php foreach ($iframes as $iframe) : ?>
@@ -50,7 +50,6 @@
         echo asifa_build_gallery($imgs);
       endif;
     ?>
-
   </section>
 
   <?php if (!empty($credits)) : ?>
@@ -66,8 +65,16 @@
     </div>
   </section>
   <?php endif; ?>
-
-  <footer class="article-footer">
-    <p class="tags"><?php the_tags('', ', ', ''); ?></p>
-  </footer>
 </article>
+
+<footer class="article-footer bg-highlight-4">
+  <h4 class="section-title">Otros Proyectos</h4>
+  <?php
+    echo get_home_gallery(array(
+      'post_type'      => get_post_type(),
+      'posts_per_page' => 6,
+      'grid'           => 'm-1of2 t-1of3 d-1of6 ld-1of6',
+      'orderby'        => 'rand'
+    ));
+  ?>
+</footer>
