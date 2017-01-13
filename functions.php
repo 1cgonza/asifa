@@ -67,7 +67,6 @@ function asifa_archive_title( $title ) {
 }
 add_filter( 'get_the_archive_title', 'asifa_archive_title' );
 
-
 /*===========================================
 =            Quitar basura de WP            =
 ===========================================*/
@@ -256,3 +255,50 @@ function asifa_mce_formats( $init_array ) {
 
 }
 add_filter( 'tiny_mce_before_init', 'asifa_mce_formats' );
+
+/*============================================
+=            Filter Post Glleries            =
+============================================*/
+function buildImagesArray($atts) {
+  $ids = explode(',', $atts['include']);
+  $imgArr = array();
+  $cols = !empty( $atts['columns'] ) ? $atts['columns'] : '3';
+
+  $grid = array('m', 't', 'd', 'ld');
+  $class = '';
+
+  if ($cols !== '1') {
+    foreach ($grid as $key => $screen) {
+      $grid[$key] = $screen . '-1of' . $cols;
+    }
+  } else {
+    foreach ($grid as $key => $screen) {
+      $grid[$key] = $screen . '-all';
+    }
+  }
+
+  $class = implode(' ', $grid);
+  $size = !empty($atts['size']) ? $atts['size'] : 'thumbnail';
+
+  foreach ($ids as $id) {
+    $imgArr[$id] = '';
+  }
+
+  return asifa_build_gallery($imgArr, $size, $class);
+}
+
+function my_gallery_shortcode( $output = '', $atts, $instance ) {
+  $return = $output; // fallback
+
+  $my_result = buildImagesArray( $atts );
+
+  if( !empty( $my_result ) ) {
+    $return = $my_result;
+  }
+
+  return $return;
+}
+
+add_filter( 'post_gallery', 'my_gallery_shortcode', 10, 3 );
+
+/*=====  End of Filter Post Glleries  ======*/
