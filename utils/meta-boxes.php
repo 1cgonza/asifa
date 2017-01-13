@@ -19,14 +19,14 @@ function asifa_register_mb() {
 
   /*----------  Sinopsis  ----------*/
   $project->add_field(array(
-    'name'    => 'Sinopsis',
+    'name'    => 'Descripción',
     'desc'    => '',
     'id'      => $prefix . 'sinopsis',
     'type'    => 'wysiwyg',
     'options' => array(
-      'textarea_rows' => 10,
-      'teeny'         => true,
-      'media_buttons' => false
+      'textarea_rows' => 20,
+      // 'teeny'         => true,
+      'media_buttons' => true
     )
   ));
 
