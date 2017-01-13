@@ -28,7 +28,7 @@
     }
   }
 
-  $profileClass = !$hasVideos ? asifa_wrapper_class() : 'article-main-content m-all t-all d-3of5 ld-3of5';
+  $profileClass = !$hasVideos ? asifa_wrapper_class() : 'article-content-wrapper article-main-content m-all t-all d-3of5 ld-3of5';
 
   $social = new AsifaSocial();
 ?>
@@ -37,10 +37,11 @@
     <?php the_title('<h1 class="page-title ' . asifa_wrapper_class() . '">', '</h1>'); ?>
   </header>
 
-  <section id="asifa-asociado-perfil" class="article-content-wrapper <?php echo $profileClass; ?>">
-  <div class="asifa-profile-portrait m-all t-all d-1of6 ld-1of6">
-    <?php echo $portrait; ?>
-  </div>
+  <section id="asifa-asociado-perfil" class="<?php echo $profileClass; ?>">
+    <div class="asifa-profile-portrait m-all t-all d-1of6 ld-1of6">
+      <?php echo $portrait; ?>
+    </div>
+
     <div id="asifa-creditos-wrapper" class="m-all t-all d-4of5 ld-4of5">
       <?php if (!empty($profesion)) : ?>
         <div class="asifa-credits-row">
@@ -73,7 +74,7 @@
 
     <?php if ( !empty($bio) ) : ?>
       <div class="asifa-credits-bio">
-        <?php echo wpautop($bio); ?>
+        <?php echo apply_filters('the_content', $bio); ?>
       </div>
     <?php endif; ?>
 
@@ -93,8 +94,16 @@
     <?php endforeach; ?>
   </section>
   <?php endif; ?>
-
-  <footer class="article-footer">
-    <p class="tags"><?php the_tags('', ', ', ''); ?></p>
-  </footer>
 </article>
+
+<footer class="article-footer bg-highlight-4">
+  <h4 class="section-title">Otros Asociados</h4>
+  <?php
+    echo get_home_gallery(array(
+      'post_type'      => get_post_type(),
+      'posts_per_page' => 6,
+      'grid'           => 'm-1of2 t-1of3 d-1of6 ld-1of6',
+      'orderby'        => 'rand'
+    ));
+  ?>
+</footer>
