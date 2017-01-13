@@ -5,10 +5,7 @@
   } else {
     while ( have_posts() ) : the_post();
       get_template_part( 'layouts/content', 'page' );
-
-      if ( comments_open() || get_comments_number() ) {
-        comments_template();
-      }
+      get_template_part('layouts/gallery', 'ui');
     endwhile;
   }
 
