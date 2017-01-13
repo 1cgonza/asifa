@@ -1,7 +1,9 @@
 <?php
 
-function asifa_wrapper_class() {
-  return 'content-wrapper m-all t-9of10 d-4of5 ld-3of4';
+function asifa_wrapper_class($class = '') {
+  $classes = 'content-wrapper m-all t-9of10 d-4of5 ld-3of4';
+  $ret = !empty($class) ? $class . ' ' . $classes : $classes;
+  return $ret;
 }
 
 function asifa_get_credits_list() {
@@ -172,12 +174,13 @@ function get_home_gallery($options) {
   }
 
   global $post;
-  $type = $options['post_type'];
-  $title = array_key_exists('title', $options) ? $options['title'] : NULL;
-  $more = array_key_exists('more_text', $options) ? $options['more_text'] : NULL;
-  $number = array_key_exists('posts_per_page', $options) ? $options['posts_per_page'] : get_option( 'posts_per_page' );
-  $grid = array_key_exists('grid', $options) ? $options['grid'] : '';
-  $order = array_key_exists('order', $options) ? $options['order'] : 'DESC';
+  $type     = $options['post_type'];
+  $title    = array_key_exists('title', $options) ? $options['title'] : NULL;
+  $more     = array_key_exists('more_text', $options) ? $options['more_text'] : NULL;
+  $number   = array_key_exists('posts_per_page', $options) ? $options['posts_per_page'] : get_option( 'posts_per_page' );
+  $grid     = array_key_exists('grid', $options) ? $options['grid'] : '';
+  $order    = array_key_exists('order', $options) ? $options['order'] : 'DESC';
+  $orderby  = array_key_exists('orderby', $options) ? $options['orderby'] : 'post_date';
   $taxonomy = array_key_exists('taxonomy', $options) ? $options['taxonomy'] : NULL;
 
   $HTML = '';
@@ -185,7 +188,8 @@ function get_home_gallery($options) {
   $loop = new WP_Query(array(
     'post_type'      => $type,
     'posts_per_page' => $number,
-    'order'          => $order
+    'order'          => $order,
+    'orderby'        => $orderby
   ));
 
   if ($loop->have_posts()) :
@@ -253,14 +257,14 @@ function get_home_gallery($options) {
   return $HTML;
 }
 
-function asifa_build_gallery($imgs) {
+function asifa_build_gallery($imgs, $thumbSize = 'asifa-150xauto', $itemClass = '') {
   $HTML = '<div class="asifa-gallery-ui" itemscope itemtype="http://schema.org/ImageGallery">';
 
   foreach ($imgs as $id => $url) :
-    $small = wp_get_attachment_image_src($id, 'asifa-150xauto');
+    $small = wp_get_attachment_image_src($id, $thumbSize);
     $large  = wp_get_attachment_image_src($id, 'asifa-2000xauto');
 
-    $HTML .= '<figure class="gallery-item" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">';
+    $HTML .= '<figure class="gallery-item ' . $itemClass . '" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">';
       $HTML .= '<a href="' . $large[0] . '" itemprop="contentUrl" data-size="' . $large[1] . 'x' . $large[2] . '">';
         $HTML .= '<img src="' . $small[0] . '" itemprop="thumbnail" />';
       $HTML .= '</a>';
